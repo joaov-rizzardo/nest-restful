@@ -3,6 +3,7 @@ import {
   IsArray,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsUUID,
   MaxLength,
@@ -13,10 +14,11 @@ import { ProductDetailsDTO } from './product-details-dto';
 import { Type } from 'class-transformer';
 import { ProductImageDTO } from './product-image-dto';
 
-export class CreateProductDTO {
+export class UpdateProductDTO {
   @IsUUID(undefined, {
     message: 'ID de usuário inválido',
   })
+  @IsOptional()
   userId: string;
 
   @IsNotEmpty({
@@ -33,11 +35,13 @@ export class CreateProductDTO {
       message: 'O valor precisa ter duas casas decimais',
     },
   )
+  @IsOptional()
   value: number;
 
   @Min(0, {
     message: 'A quantidade precisa ser maior ou igual a zero',
   })
+  @IsOptional()
   quantity: number;
 
   @IsNotEmpty({
@@ -47,11 +51,13 @@ export class CreateProductDTO {
     message:
       'A quantidade máxima de caracteres para a descrição(1000) foi excedida',
   })
+  @IsOptional()
   description: string;
 
   @IsNotEmpty({
     message: 'A categoria não pode ser vazia',
   })
+  @IsOptional()
   category: string;
 
   @IsArray({
@@ -62,6 +68,7 @@ export class CreateProductDTO {
   })
   @ValidateNested()
   @Type(() => ProductDetailsDTO)
+  @IsOptional()
   details: ProductDetailsDTO[];
 
   @IsArray({
@@ -72,5 +79,6 @@ export class CreateProductDTO {
   })
   @ValidateNested()
   @Type(() => ProductImageDTO)
+  @IsOptional()
   images: ProductImageDTO[];
 }
